@@ -11,11 +11,31 @@ function writePassword() {
 
 function generatePassword() {
   var passwordOptions = createPasswordOptions();
+  var password = "";
+  var trueOptions = [];
+
+  if(passwordOptions[1] == true) {
+    trueOptions.push("lowercase");
+  }
+  if(passwordOptions[2] == true) {
+    trueOptions.push("uppercase");
+  }
+  if(passwordOptions[3] == true) {
+    trueOptions.push("numbers");
+  }
+  if(passwordOptions[4] == true) {
+    trueOptions.push("special");
+  }
 
   console.log(passwordOptions);
+  console.log(trueOptions);
   for(i=0; i<passwordOptions[0]; i++) {
-    
+    var charType = Math.floor(Math.random() * trueOptions.length);
+    var character = getCharacters[trueOptions[charType]]();
+    password = password + character;
   }
+  console.log(password);
+  return password;
 }
 
 function createPasswordOptions() {
@@ -37,6 +57,27 @@ function createPasswordOptions() {
   }
 
   return [passwordLength, includeLowercase, includeUppercase, includeNumbers, includeSpecial];
+}
+
+var getCharacters = {
+  lowercase: function getLowercase() {
+    const lowercaseChar = "abcdefghijklmnopqrstuvwxyz"
+    return lowercaseChar.charAt(Math.floor(Math.random() * lowercaseChar.length));
+  },
+
+  uppercase: function getUppercase() {
+    const UppercaseChar = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    return UppercaseChar.charAt(Math.floor(Math.random() * UppercaseChar.length));
+  },
+
+  numbers: function getNum() {
+    return Math.floor(Math.random() * 10)
+  },
+
+  special: function getSpecial() {
+    const specialChar = " ~`!@#$%^&*()-_+={}[]|:;<>,.?"
+    return specialChar.charAt(Math.floor(Math.random() * specialChar.length));
+  },
 }
 
 // Add event listener to generate button
